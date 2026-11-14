@@ -1,0 +1,55 @@
+# API for RegisterView
+###
+POST http://127.0.0.1:8000/register/
+Content-Type: application/json
+
+{
+    "username":"hari",
+    "email":"hari@gmail.com",
+    "password":"hari@123"
+}
+
+#API for UsersListView
+###
+GET http://127.0.0.1:8000/users/
+Accept: application/json
+
+#API for EventCreateView
+###
+GET http://127.0.0.1:8000/events/
+Accept: application/json
+Authorization: Basic hari:hari@123
+
+###
+POST http://127.0.0.1:8000/events/
+Content-Type: application/json
+Authorization: Basic hari:hari@123
+
+{
+    "title" : "Halloween Celebration",
+    "description" : "halloween celebration",
+    "date" : "2026-11-05",
+    "location" : "Infosys"
+}
+
+#API for EventRetrieveUpdateDelete
+###
+GET http://127.0.0.1:8000/events/3/
+Accept: application/json
+Authorization: Basic hari:hari@123
+
+###
+PUT http://127.0.0.1:8000/events/3/
+Content-Type: application/json
+Authorization: Basic hari:hari@123
+
+{
+    "title" : "4th Aniversary Celebration",
+    "description" : "Luminar Technolab 4th year aniversary celebration",
+    "date" : "2026-11-13",
+    "location" : "Angamaly"
+}
+
+###
+DELETE http://127.0.0.1:8000/events/1/
+Authorization: Basic hari:hari@123
