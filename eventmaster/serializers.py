@@ -29,14 +29,15 @@ class EventMemberSerializer(serializers.ModelSerializer):
         fields = ['id','username','member_username','member_user_id','joined_at']
         read_only_fields = ['id','joined_at']
 
-        def username_valid(self,value):
-            try:
-                user = User.objects.get(username=value)
-            except:
-                if User.DoesNotExist:
-                    raise serializers.ValidationError('Not an registered user')
-            event = self.context['event']
-            if user == event.created_by:
-                raise serializers.ValidationError('Event creator cannot be added as a member')
-            if EventMemberDb.objects.filter(user=user,event=event).exist():
-                raise serializers.ValidationError('User is already added to the event')
+    def username_valid(self,value):
+        try:
+            user = User.objects.get(username=value)
+        except:
+            if User.DoesNotExist:
+                raise serializers.ValidationError('Not an registered user')
+        event = self.context['event']
+        if user == event.created_by:
+            raise serializers.ValidationError('Event creator cannot be added as a member')
+        if EventMemberDb.objects.filter(user=user,event=event).exist():
+            raise serializers.ValidationError('User is already added to the event')
+        return value
