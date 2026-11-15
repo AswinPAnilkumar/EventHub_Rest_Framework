@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from eventmaster.serializers import UserSerializer,EventSerializer,EventMemberSerializer
 from eventmaster.models import EventDb,EventMemberDb
 from rest_framework import permissions,authentication,serializers
-from tournament.permissions import OwnerOnly
+from eventmaster.permissions import OwnerOnly
 
 # Create your views here.
 class RegisterView(APIView):
