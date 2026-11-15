@@ -2,9 +2,10 @@ from django.shortcuts import render,get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from eventmaster.serializers import UserSerializer,EventSerializer
-from eventmaster.models import EventDb
+from eventmaster.serializers import UserSerializer,EventSerializer,EventMemberSerializer
+from eventmaster.models import EventDb,EventMemberDb
 from rest_framework import permissions,authentication,serializers
+from tournament.permissions import OwnerOnly
 
 # Create your views here.
 class RegisterView(APIView):
@@ -25,7 +26,7 @@ class UsersListView(APIView):
 
 class EventCreateView(APIView):
     authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [OwnerOnly]
     
     def get(self,request):
         event = EventDb.objects.filter(created_by=request.user)
@@ -43,7 +44,7 @@ class EventCreateView(APIView):
 
 class EventRetrieveUpdateDelete(APIView):
     authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [OwnerOnly]
 
     def get(self,request,pk):
         event_object = get_object_or_404(EventDb,id=pk)

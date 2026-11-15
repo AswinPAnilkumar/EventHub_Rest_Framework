@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from eventmaster.models import EventDb
+from eventmaster.models import EventDb,EventMemberDb
 
 
 class UserSerializer(serializers.ModelSerializer):
