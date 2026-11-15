@@ -18,3 +18,26 @@ class EventSerializer(serializers.ModelSerializer):
         model = EventDb
         fields = '__all__'
         read_only_fields = ['id','created_by','created_at','updated_at']
+    
+class EventMemberSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(write_only=True)
+    member_username = serializers.CharField(source='user.username',read_only=True)
+    member_user_id = serializers.IntegerField(source='user.id',read_only=True)
+
+    class Meta:
+        model = EventMemberDb
+        fields = ['id','username','member_username','member_user_id','joined_at']
+        read_only_fields = ['id','joined_at']
+
+        def username_valid(self,value):
+            try:
+                user = User.objects.get(username=value)
+            except:
+                if User.DoesNotExist:
+                    raise serializers.ValidationError('Not an registered user')
+            event = self.context['event']
+            if user == trip.created_by:
+                raise serializer.ValidationError('Event creator cannot be added as a member')
+            if EventMemberDb.objects.filter(user=user,event=event).exist():
+                raise serializer.ValidationError('User is already added to the event')
+                
