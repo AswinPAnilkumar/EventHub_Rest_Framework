@@ -37,7 +37,6 @@ class EventMemberSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError('Not an registered user')
             event = self.context['event']
             if user == trip.created_by:
-                raise serializer.ValidationError('Event creator cannot be added as a member')
+                raise serializers.ValidationError('Event creator cannot be added as a member')
             if EventMemberDb.objects.filter(user=user,event=event).exist():
-                raise serializer.ValidationError('User is already added to the event')
-                
+                raise serializers.ValidationError('User is already added to the event')
